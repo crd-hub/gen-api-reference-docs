@@ -20,7 +20,7 @@ import (
 	texttemplate "text/template"
 	"unicode"
 
-	"go.crdhub.dev/gen-crd-api-reference-docs/templates"
+	"go.crdhub.dev/gen-api-reference-docs/templates"
 
 	"github.com/Masterminds/sprig/v3"
 	"github.com/pkg/errors"

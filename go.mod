@@ -1,4 +1,4 @@
-module go.crdhub.dev/gen-crd-api-reference-docs
+module go.crdhub.dev/gen-api-reference-docs
 
 go 1.17
 
