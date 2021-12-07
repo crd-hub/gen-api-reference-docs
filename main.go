@@ -143,15 +143,19 @@ func main() {
 			if err != nil {
 				return err
 			}
+			if d.IsDir() {
+				return os.MkdirAll(filepath.Join(*flOutDir, path), 0755)
+			}
+
 			data, err := fs.ReadFile(fsys, path)
 			if err != nil {
 				return err
 			}
 			f := filepath.Join(*flOutDir, path)
-			dir := filepath.Dir(f)
-			if err := os.MkdirAll(dir, 0755); err != nil {
-				return fmt.Errorf("failed create dir %s, reason: %v", dir, err)
-			}
+			//dir := filepath.Dir(f)
+			//if err := os.MkdirAll(dir, 0755); err != nil {
+			//	return fmt.Errorf("failed create dir %s, reason: %v", dir, err)
+			//}
 			return ioutil.WriteFile(f, data, 0644)
 		})
 		if err != nil {
