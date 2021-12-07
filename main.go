@@ -247,9 +247,7 @@ func combineAPIPackages(pkgs []*types.Package) ([]*apiPackage, error) {
 	}
 
 	for _, pkg := range pkgs {
-		if internal, err := isInternal(pkg); err != nil {
-			return nil, err
-		} else if internal {
+		if isInternal(pkg) {
 			continue
 		}
 
@@ -713,15 +711,16 @@ func apiVersionForPackage(pkg *types.Package) (string, string, error) {
 
 // isInternal determines whether the given package
 // contains the internal types or not
-func isInternal(p *types.Package) (bool, error) {
+func isInternal(p *types.Package) bool {
 	for _, t := range p.Types {
 		for _, member := range t.Members {
 			if member.Name == "TypeMeta" {
-				return !strings.Contains(member.Tags, "json"), nil
+				return !strings.Contains(member.Tags, "json")
 			}
 		}
 	}
-	return false, fmt.Errorf("unable to find TypeMeta for any types in package %s", p.Path)
+	klog.Infof("unable to find TypeMeta for any types in package %s", p.Path)
+	return false
 }
 
 // extractTypeToPackageMap creates a *types.Type map to apiPackage
